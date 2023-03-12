@@ -21,6 +21,11 @@ return require('packer').startup(function(use)
     end
   }
 
+  use {
+      'narutoxy/silicon.lua',
+      requires = { 'nvim-lua/plenary.nvim' }
+  }
+
   use 'ggandor/leap.nvim'
 
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
