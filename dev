@@ -6,8 +6,7 @@ ln -s "$(pwd)/nvim" ~/.config/nvim
 rm -rf ~/.config/tmux
 ln -s "$(pwd)/tmux" ~/.config/tmux
 
-echo "source '$(pwd)/bash/.bash_profile'"
-echo "source '$(pwd)/bash/.bash_profile'" >> ~/.bashrc
+echo "source $(pwd)/bash/.bash_profile" >> ~/.bashrc
 
 source ~/.bashrc
 
