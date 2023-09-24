@@ -14,11 +14,10 @@ return require('packer').startup(function(use)
   }
 
   use {
-    'rose-pine/neovim',
-    as = 'rose-pine',
-    config = function()
-        vim.cmd('colorscheme rose-pine')
-    end
+      'rebelot/kanagawa.nvim',
+      config = function()
+          vim.cmd('colorscheme kanagawa-dragon')
+      end
   }
 
   use {
