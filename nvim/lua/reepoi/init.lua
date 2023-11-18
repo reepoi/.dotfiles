@@ -1,5 +1,6 @@
 require("reepoi.set")
 require("reepoi.remap")
+require("reepoi.lazy")
 
 local augroup = vim.api.nvim_create_augroup
 local reepoiGroup = augroup('reepoi', {})
@@ -31,4 +32,3 @@ autocmd({"BufWritePre"}, {
 vim.g.netrw_browse_split = 0
 vim.g.netrw_banner = 0
 vim.g.netrw_winsize = 25
-
