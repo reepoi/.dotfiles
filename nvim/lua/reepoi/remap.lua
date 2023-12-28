@@ -1,30 +1,33 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+local keymap = function(mode, keys, func, desc)
+    vim.keymap.set(mode, keys, func, { desc = desc })
+end
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+keymap("n", "<leader>gf", vim.cmd.Ex, "[G]oto [F]iles")
 
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+keymap("v", "J", ":m '>+1<CR>gv=gv", "Move visual selection down")
+keymap("v", "K", ":m '<-2<CR>gv=gv", "Move visual selection up")
 
-vim.keymap.set("x", "<leader>p", [["_dP]])
+keymap("n", "J", "mzJ`z", "[J]oin lines")
+keymap("n", "<C-d>", "<C-d>zz", "Page down with cursor centering")
+keymap("n", "<C-u>", "<C-u>zz", "Page up with cursor centering")
+keymap("n", "n", "nzzzv", "Next search match with cursor centering")
+keymap("n", "N", "Nzzzv", "Prev search match with cursor centering")
 
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+keymap("x", "<leader>p", [["_dP]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+keymap({ "n", "v" }, "<leader>y", [["+y]])
+keymap("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+keymap({ "n", "v" }, "<leader>d", [["_d]])
 
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+keymap("n", "<leader>j", "<cmd>cnext<CR>zz")
+keymap("n", "<leader>k", "<cmd>cprev<CR>zz")
+-- keymap("n", "<leader>k", "<cmd>lnext<CR>zz")
+-- keymap("n", "<leader>j", "<cmd>lprev<CR>zz")
+
+-- keymap("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
