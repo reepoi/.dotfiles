@@ -24,7 +24,14 @@ require("lazy").setup({
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {'tpope/vim-fugitive'},
-    {'ThePrimeagen/harpoon'},
+    {
+        'ThePrimeagen/harpoon',
+        branch = 'harpoon2',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope.nvim'
+        }
+    },
     {'christoomey/vim-tmux-navigator'},
     {
         'nvim-treesitter/nvim-treesitter',
@@ -50,13 +57,15 @@ require("lazy").setup({
         'hrsh7th/nvim-cmp',
         dependencies = {
             -- Snippet Engine & its associated nvim-cmp source
-            'L3MON4D3/LuaSnip',
+            {
+                'L3MON4D3/LuaSnip',
+                version = 'v2.*'
+            },
             'saadparwaiz1/cmp_luasnip',
 
             -- Adds LSP completion capabilities
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-path',
-            'hrsh7th/cmp-buffer',
 
             -- Adds a number of user-friendly snippets
             'rafamadriz/friendly-snippets',
