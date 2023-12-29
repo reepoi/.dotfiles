@@ -19,7 +19,8 @@ local function toggle_telescope(harpoon_files)
     }):find()
 end
 
-vim.keymap.set("n", "<leader>hh", function() toggle_telescope(harpoon:list()) end, { desc = 'Open Harpoon menu' })
+-- vim.keymap.set("n", "<leader>hh", function() toggle_telescope(harpoon:list()) end, { desc = 'Open Harpoon menu' })
+vim.keymap.set("n", "<leader>hh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
 vim.keymap.set("n", "<leader>ht", function() harpoon:list():select(1) end)
 vim.keymap.set("n", "<leader>hs", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<leader>hr", function() harpoon:list():select(3) end)
