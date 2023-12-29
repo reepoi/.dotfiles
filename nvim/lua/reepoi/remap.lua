@@ -5,8 +5,6 @@ local keymap = function(mode, keys, func, desc)
     vim.keymap.set(mode, keys, func, { desc = desc })
 end
 
-keymap("n", "<leader>gf", vim.cmd.Ex, "[G]oto [F]iles")
-
 keymap("v", "J", ":m '>+1<CR>gv=gv", "Move visual selection down")
 keymap("v", "K", ":m '<-2<CR>gv=gv", "Move visual selection up")
 
