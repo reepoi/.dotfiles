@@ -103,4 +103,5 @@ require("lazy").setup({
         opts = {},
     },
     { 'numToStr/Comment.nvim', opts = {} },
+    { 'Olical/conjure' }
 })
