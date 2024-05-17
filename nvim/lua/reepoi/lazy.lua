@@ -103,4 +103,14 @@ require("lazy").setup({
         opts = {},
     },
     { 'numToStr/Comment.nvim', opts = {} },
+    {
+        'mfussenegger/nvim-dap',
+        dependencies = {
+            'mfussenegger/nvim-dap-python',
+            'rcarriga/nvim-dap-ui',
+            'theHamsta/nvim-dap-virtual-text',
+            'nvim-neotest/nvim-nio',
+            'williamboman/mason.nvim',
+        }
+    },
 })
