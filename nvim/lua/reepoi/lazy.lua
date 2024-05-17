@@ -113,4 +113,5 @@ require("lazy").setup({
             'williamboman/mason.nvim',
         }
     },
+    { 'Olical/conjure' },
 })
