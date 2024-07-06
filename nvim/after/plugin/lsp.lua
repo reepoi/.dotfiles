@@ -9,7 +9,6 @@ local servers = {
         },
     },
     ruff = {},
-    ruff_lsp = {},
     julials = {}, -- Julia
     jedi_language_server = {},
     tinymist = {}, -- Typst
