@@ -13,11 +13,12 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
     {
-        "rebelot/kanagawa.nvim",
-        priority = 1000,
+        'ellisonleao/gruvbox.nvim',
+        priority = 1000 ,
         config = function()
-            vim.cmd('colorscheme kanagawa-dragon')
-        end
+            vim.o.background = 'light'
+            vim.cmd('colorscheme gruvbox')
+        end,
     },
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
@@ -91,7 +92,7 @@ require("lazy").setup({
         opts = {
             options = {
                 icons_enabled = false,
-                theme = 'onedark',
+                theme = 'gruvbox',
                 component_separators = '|',
                 section_separators = '',
             },
