@@ -113,5 +113,11 @@ require("lazy").setup({
             'williamboman/mason.nvim',
         }
     },
-    -- { 'Olical/conjure' },
+    {
+        'chomosuke/typst-preview.nvim',
+        lazy = false, -- or ft = 'typst'
+        version = '0.3.*',
+        build = function() require 'typst-preview'.update() end,
+    },
+    -- {'Olical/conjure' },
 })

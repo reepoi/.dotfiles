@@ -11,7 +11,9 @@ local servers = {
     ruff = {},
     julials = {}, -- Julia
     jedi_language_server = {},
-    tinymist = {}, -- Typst
+    tinymist = {
+        exportPdf = 'never',
+    }, -- Typst
 }
 
 require('neodev').setup()
