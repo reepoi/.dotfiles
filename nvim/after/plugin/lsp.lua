@@ -7,8 +7,12 @@ local servers = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
         },
-        jedi_language_server = {},
     },
+    ruff = {},
+    ruff_lsp = {},
+    julials = {}, -- Julia
+    jedi_language_server = {},
+    tinymist = {}, -- Typst
 }
 
 require('neodev').setup()
