@@ -7,6 +7,7 @@ local servers = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
         },
+        jedi_language_server = {},
     },
 }
 
@@ -21,7 +22,7 @@ mason_lspconfig.setup({
     ensure_installed = vim.tbl_keys(servers)
 })
 
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
     local nmap = function(keys, func, desc)
         if desc then
             desc = 'LSP: ' .. desc
