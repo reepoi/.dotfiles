@@ -212,12 +212,12 @@ plugins {
 //    - true
 //    - false (Default)
 //
-// simplified_ui true
+simplified_ui true
 
 // Choose the path to the default shell that zellij will use for opening new panes
 // Default: $SHELL
 //
-// default_shell "fish"
+default_shell "bash"
 
 // Choose the path to override cwd that zellij will use for opening new panes
 //
@@ -279,7 +279,7 @@ plugins {
 // Choose the theme that is specified in the themes section.
 // Default: default
 //
-// theme "default"
+theme "gruvbox-light"
 
 // The name of the default layout to load on startup
 // Default: "default"
