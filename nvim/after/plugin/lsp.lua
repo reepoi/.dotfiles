@@ -12,7 +12,7 @@ local servers = {
     julials = {}, -- Julia
     jedi_language_server = {},
     tinymist = {
-        exportPdf = 'never',
+        exportPdf = 'onSave',
     }, -- Typst
 }
 
