@@ -7,6 +7,9 @@ ln -s "$(pwd)/nvim" ~/.config/nvim
 rm -rf ~/.config/tmux
 ln -s "$(pwd)/tmux" ~/.config/tmux
 
+rm -rf ~/.config/zellij
+ln -s "$(pwd)/zellij" ~/.config/zellij
+
 echo "source $(pwd)/bash/.bash_profile" >> ~/.bashrc
 
 source ~/.bashrc
