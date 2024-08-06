@@ -21,7 +21,8 @@ keymap("n", "<leader>Y", [["+Y]])
 
 keymap({ "n", "v" }, "<leader>d", [["_d]])
 
-keymap("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+keymap("n", "<leader>gd", "<cmd>silent !zellij run -f -- git diff %<CR>")
+keymap("n", "<C-f>", "<cmd>silent !zellij run -f -- zellij-sessionizer<CR>")
 
 keymap("n", "<leader>j", "<cmd>cnext<CR>zz")
 keymap("n", "<leader>k", "<cmd>cprev<CR>zz")
