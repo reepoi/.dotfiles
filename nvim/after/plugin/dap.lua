@@ -2,7 +2,7 @@ local dap = require('dap')
 local ui = require('dapui')
 
 require('dapui').setup()
-require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+require('dap-python').setup()
 require('nvim-dap-virtual-text').setup()
 
 dap.listeners.before.attach.dapui_config = function() ui.open() end
