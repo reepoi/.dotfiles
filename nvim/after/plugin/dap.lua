@@ -3,7 +3,9 @@ local ui = require('dapui')
 
 require('dapui').setup()
 require('dap-python').setup()
-require('nvim-dap-virtual-text').setup()
+require('nvim-dap-virtual-text').setup({
+    virt_text_pos = 'eol'
+})
 
 dap.listeners.before.attach.dapui_config = function() ui.open() end
 dap.listeners.before.launch.dapui_config = function() ui.open() end
