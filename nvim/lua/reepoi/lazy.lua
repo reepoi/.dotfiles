@@ -120,5 +120,15 @@ require("lazy").setup({
         version = '0.3.*',
         build = function() require 'typst-preview'.update() end,
     },
-    -- {'Olical/conjure' },
+    {
+        'Olical/conjure',
+        ft = { 'clojure', 'fennel' }, -- etc
+        lazy = true,
+        init = function()
+          -- Set configuration options here
+          -- Uncomment this to get verbose logging to help diagnose internal Conjure issues
+          -- This is VERY helpful when reporting an issue with the project
+          -- vim.g["conjure#debug"] = true
+        end,
+    },
 })
