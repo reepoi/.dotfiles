@@ -21,7 +21,7 @@ require("lazy").setup({
         end,
     },
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.5',
+        'nvim-telescope/telescope.nvim', tag = '0.1.8',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
@@ -117,7 +117,7 @@ require("lazy").setup({
     {
         'chomosuke/typst-preview.nvim',
         lazy = false, -- or ft = 'typst'
-        version = '0.3.*',
+        version = '1.0.*',
         build = function() require 'typst-preview'.update() end,
     },
     {
