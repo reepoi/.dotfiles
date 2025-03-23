@@ -103,7 +103,17 @@ require("lazy").setup({
         main = 'ibl',
         opts = {},
     },
-    { 'numToStr/Comment.nvim', opts = {} },
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            toggler = {
+                line = '<C-_>', -- Ctrl+/
+            },
+            opleader = {
+                line = '<C-_>', -- Ctrl+/
+            },
+        },
+    },
     {
         'mfussenegger/nvim-dap',
         dependencies = {
