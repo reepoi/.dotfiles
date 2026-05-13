@@ -9,7 +9,7 @@ local servers = {
         },
     },
     ruff = {},
-    julials = {}, -- Julia
+    -- julials = {}, -- Julia
     jedi_language_server = {},
     tinymist = {
         exportPdf = 'onSave',
@@ -80,20 +80,26 @@ require('which-key').add({
     { "<leader>w_", hidden = true },
   })
 
-mason_lspconfig.setup_handlers({
-    function(server_name)
-        require('lspconfig')[server_name].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            settings = servers[server_name],
-            filetypes = (servers[server_name] or {}).filetypes,
-            handlers = {
-                ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
-            },
-        })
-    end,
-})
+for server_name, s in pairs(servers) do
+    vim.lsp.config(server_name, {
+        settings = s
+    })
+end
 
+-- mason_lspconfig.setup_handlers({
+--     function(server_name)
+--         require('lspconfig')[server_name].setup({
+--             capabilities = capabilities,
+--             on_attach = on_attach,
+--             settings = servers[server_name],
+--             filetypes = (servers[server_name] or {}).filetypes,
+--             handlers = {
+--                 ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded' }),
+--             },
+--         })
+--     end,
+-- })
+--
 local cmp = require 'cmp'
 local luasnip = require 'luasnip'
 require('luasnip.loaders.from_vscode').lazy_load()
