@@ -21,7 +21,7 @@ require("lazy").setup({
         end,
     },
     {
-        'nvim-telescope/telescope.nvim', tag = '0.1.8',
+        'nvim-telescope/telescope.nvim', version = 'v0.2.1',
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
@@ -50,8 +50,12 @@ require("lazy").setup({
     {'christoomey/vim-tmux-navigator'},
     {
         'nvim-treesitter/nvim-treesitter',
+        branch = 'master',
         dependencies = {
-            'nvim-treesitter/nvim-treesitter-textobjects',
+            {
+                'nvim-treesitter/nvim-treesitter-textobjects',
+                branch = 'master',
+            },
         },
         build = ':TSUpdate',
     },
