@@ -1,24 +1,27 @@
-require'nvim-treesitter.configs'.setup {
-    -- A list of parser names, or "all"
-    ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "typst", "python" },
+-- nvim-treesitter `main` branch (the `master` branch does not support 0.12).
+-- Parsers are built with the `tree-sitter` CLI and a C compiler.
+local ensure_installed = { "javascript", "typescript", "c", "lua", "rust", "typst", "python", "markdown" }
 
-    -- Install parsers synchronously (only applied to `ensure_installed`)
-    sync_install = false,
+require('nvim-treesitter').install(ensure_installed)
 
-    -- Automatically install missing parsers when entering buffer
-    -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
-    auto_install = true,
-    -- to prioritize typst
-    ignore_install = { "sql" },
-
-    highlight = {
-        -- `false` will disable the whole extension
-        enable = true,
-
-        -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-        -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-        -- Using this option may slow down your editor, and you may see some duplicate highlights.
-        -- Instead of true it can also be a list of languages
-        additional_vim_regex_highlighting = false,
-    }
-}
+vim.api.nvim_create_autocmd('FileType', {
+    group = vim.api.nvim_create_augroup('reepoi-treesitter', {}),
+    callback = function(args)
+        local lang = vim.treesitter.language.get_lang(args.match)
+        if not lang then
+            return
+        end
+        -- Install missing parsers on demand (the old `auto_install = true`),
+        -- skipping sql as before.
+        if lang ~= 'sql' and not vim.treesitter.language.add(lang)
+            and vim.list_contains(require('nvim-treesitter').get_available(), lang) then
+            require('nvim-treesitter').install(lang):await(function()
+                if vim.api.nvim_buf_is_valid(args.buf) then
+                    pcall(vim.treesitter.start, args.buf, lang)
+                end
+            end)
+            return
+        end
+        pcall(vim.treesitter.start, args.buf, lang)
+    end,
+})

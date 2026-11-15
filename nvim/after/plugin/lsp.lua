@@ -15,8 +15,6 @@ local servers = {
     }, -- Typst
 }
 
-require('neodev').setup()
-
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
@@ -74,7 +72,7 @@ require('which-key').add({
     { "<leader>h_", hidden = true },
     { "<leader>r", group = "[R]ename" },
     { "<leader>r_", hidden = true },
-    { "<leader>s", group = "[S]earch" },
+    { "<leader>s", group = "[S]lopScoop" },
     { "<leader>s_", hidden = true },
     { "<leader>w", group = "[W]orkspace" },
     { "<leader>w_", hidden = true },

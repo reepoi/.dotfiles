@@ -1,5 +1,5 @@
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -50,25 +50,27 @@ require("lazy").setup({
     {'christoomey/vim-tmux-navigator'},
     {
         'nvim-treesitter/nvim-treesitter',
-        branch = 'master',
-        dependencies = {
-            {
-                'nvim-treesitter/nvim-treesitter-textobjects',
-                branch = 'master',
-            },
-        },
+        branch = 'main',
+        lazy = false,
         build = ':TSUpdate',
     },
     {'mbbill/undotree'},
     {
         'neovim/nvim-lspconfig',
         dependencies = {
-            {'williamboman/mason.nvim'},           -- Optional
-            {'williamboman/mason-lspconfig.nvim'}, -- Optional
+            {'mason-org/mason.nvim'},
+            {'mason-org/mason-lspconfig.nvim'},
 
             {'j-hui/fidget.nvim', opts = {} },
-
-            'folke/neodev.nvim',
+        },
+    },
+    {
+        'folke/lazydev.nvim',
+        ft = 'lua',
+        opts = {
+            library = {
+                { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+            },
         },
     },
     {
@@ -125,7 +127,7 @@ require("lazy").setup({
             'rcarriga/nvim-dap-ui',
             'theHamsta/nvim-dap-virtual-text',
             'nvim-neotest/nvim-nio',
-            'williamboman/mason.nvim',
+            'mason-org/mason.nvim',
         }
     },
     {
@@ -146,5 +148,37 @@ require("lazy").setup({
           -- This is VERY helpful when reporting an issue with the project
           -- vim.g["conjure#debug"] = true
         end,
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        ft = 'markdown',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        opts = {
+            latex = { enabled = false },
+        },
+    },
+    {
+        -- git subtree of ~/GitHub/slopscoop.nvim (see `git subtree pull/push`).
+        dir = vim.fn.stdpath('config') .. '/plugins/slopscoop.nvim',
+        name = 'slopscoop.nvim',
+        -- lazy doesn't build help tags for `dir` plugins; (re)build them when
+        -- doc/tags is missing or older than the help file.
+        init = function(plugin)
+            local doc = plugin.dir .. '/doc'
+            local tags = vim.uv.fs_stat(doc .. '/tags')
+            local txt = vim.uv.fs_stat(doc .. '/slopscoop.txt')
+            if txt and (not tags or tags.mtime.sec < txt.mtime.sec) then
+                vim.cmd.helptags(vim.fn.fnameescape(doc))
+            end
+        end,
+        opts = {
+            author = 'Taos',
+            keymaps = {
+                -- <leader>rn is LSP rename, so slopscoop uses <leader>s.
+                note = '<leader>sn',
+                reviewed = '<leader>sr',
+                check = '<leader>sc',
+            },
+        },
     },
 })
