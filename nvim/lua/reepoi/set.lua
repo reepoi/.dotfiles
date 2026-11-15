@@ -31,3 +31,9 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 vim.opt.completeopt = 'menuone,noselect'
+
+-- Border on every floating window (hover, diagnostics, signature help, ...)
+vim.o.winborder = "single"
+
+-- Show diagnostic messages at the end of each line
+vim.diagnostic.config({ virtual_text = true })
