@@ -1,0 +1,119 @@
+*slopscoop.txt*  Review code along a story
+
+==============================================================================
+CONTENTS                                                   *slopscoop*
+
+  1. Introduction ........................ |slopscoop-intro|
+  2. Decks ............................... |slopscoop-decks|
+  3. Notes ............................... |slopscoop-notes|
+  4. Reviewed marks ...................... |slopscoop-reviewed|
+  5. Commands and keymaps ................ |slopscoop-commands|
+  6. Configuration ....................... |slopscoop-config|
+
+==============================================================================
+1. INTRODUCTION                                            *slopscoop-intro*
+
+A deck is a markdown file that walks through a feature. Moving the cursor
+through it shows each slide's code in the |preview-window| (|:pedit|), where
+your LSP works as usual; |CTRL-W_P| jumps into it and |CTRL-W_z| closes it. Notes are files in the repository; open notes show as |vim.diagnostic|
+entries on the code they quote.
+
+Requires Neovim 0.12+, git, and a treesitter parser for languages whose
+symbols you anchor.
+
+==============================================================================
+2. DECKS                                                   *slopscoop-decks*
+
+Decks are files matching the `decks` option (default `review/*/deck.md`)
+relative to a git root. `#` headings are topics, `##` headings slides. A
+heading may end with `{#slug}`; otherwise the slug comes from the title.
+
+A slide points at code with lines outside code fences:
+>
+    @code rolling_da/train.py::configure_data_module
+    @code rolling_da/train.py:110-113
+<
+                                                           *slopscoop-anchor*
+Anchors, with paths relative to the git root:
+
+  `path::Name`    a function, class or assignment; nested names are dotted
+                (`Class.method`); decorators are included
+  `path:12-20`    lines 12 to 20
+  `path:12`       line 12
+  `path`          the whole file
+
+The preview window opens on the right. The deck keeps the width |:Vexplore|
+gives its window (|g:netrw_winsize|; half when unset) and the code gets the
+rest. It shows the anchor at or above the cursor in the current slide, or the
+slide's first anchor. Anchors that do not resolve, duplicate slugs and slides
+changed since reviewed are diagnostics on the deck. Use |gO| for an outline
+and |]]| / |[[| to move between headings.
+
+==============================================================================
+3. NOTES                                                   *slopscoop-notes*
+
+Notes are `<deck dir>/notes/N<k>.md`. The first line is the header: order-free
+`key=value` tokens and the location (`path:12` or `path:12-20`). Keys used:
+
+  `tag`     `?` (info), `!` (warning), `ok` (hint)
+  `status`  `open`, `answered`, `fixed`, `resolved`, `wontfix`, `dup`;
+          statuses in `closed_statuses` produce no diagnostic
+  `at`      commit the note was written at
+  `slide`   slug, for notes written in the deck
+  `dup`     id of the note this one duplicates
+
+Unknown keys are kept. The first fenced block quotes the code: when the code
+moves the note follows the quote, and when the quote is gone the diagnostic is
+marked `[stale]`. The rest of the file is the thread.
+
+A note on code belongs to the deck entered last, or to the only deck in the
+repository. Open notes written in the deck (`slide=`) are counted on the
+slide's heading.
+
+In decks and notes, |gf| follows `path::Name`; |gF| follows `path:12` and |gf|
+note ids (`N3`), both built in through 'path' and 'suffixesadd'.
+
+==============================================================================
+4. REVIEWED MARKS                                          *slopscoop-reviewed*
+
+Marks are stored in `<deck dir>/reviewed`, one line per slide:
+`<slug> <commit> <date> <hash>`. The hash covers the slide's anchored code, so
+the heading gets a warning diagnostic once that code changes. Only the
+plugin writes this file.
+
+==============================================================================
+5. COMMANDS AND KEYMAPS                                    *slopscoop-commands*
+
+                                                           *:SlopScoop*
+:SlopScoop note          Note on the current line.
+:'<,'>SlopScoop note     Note on a range.
+:SlopScoop reviewed      Toggle the reviewed mark of the slide (a changed mark
+                         is renewed).
+:SlopScoop check         Fill the quickfix list with the deck's diagnostics,
+                         reviewed marks of missing slides and note problems.
+:SlopScoop refresh       |:checktime|, then reload notes and marks. Also runs
+                         on |FocusGained|.
+
+Default keymaps: `<leader>rn` note (normal and visual), `<leader>rc` check,
+and in decks `<leader>rr` reviewed.
+
+==============================================================================
+6. CONFIGURATION                                           *slopscoop-config*
+>lua
+    require('slopscoop').setup({
+      decks = 'review/*/deck.md',
+      notes_dir = 'notes',
+      reviewed_file = 'reviewed',
+      closed_statuses = { 'resolved', 'wontfix', 'dup' },
+      author = 'you',
+      keymaps = { note = '<leader>rn', reviewed = '<leader>rr', check = '<leader>rc' },
+    })
+<
+Set a keymap to `false` to disable it.
+
+Highlights: `SlopScoopAnchor`, `SlopScoopReviewed`, `SlopScoopNotes`.
+
+Symbol anchors for a language use the query `queries/<lang>/slopscoop.scm`,
+capturing `@symbol` (the definition) and `@name`.
+
+ vim:tw=78:ts=8:ft=help:norl:
